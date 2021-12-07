@@ -1,0 +1,9 @@
+@import "../normalize.css";
+.navlog {
+    font-size: 18px;
+    color:#999999;
+    margin-right: 10px;
+    cursor: pointer
+}
+
+
