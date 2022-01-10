@@ -1,37 +1,76 @@
 <template>
-    <div id="root1"></div>
+
+
+<!--    <a href="test.html" target="_blank" @click="classroominfo"><button>aaa</button></a>-->
+    <a href="test.html"  ><button @click="classroominfo">aaa</button></a>
+<!--   !!!!! 能够在vue里面跳转到新页面的方法是 在vue.config.js里面配置一下page属性，这样在vue使用a标签跳转html页面的时候就可以直接用文件名称了-->
 </template>
-<script src="https://download.agora.io/edu-apaas/release/edu_sdk_1.1.5.10.js"></script>
+
+
 <script>
+    // import  {AgoraEduSDK} from'agora-classroom-sdk'
+    import {networkrequest} from "../../network/networkrequest";
+    import apiName from "../../network/apiurl";
+
     export default {
-        name: "OnlineClass"
-    }
-    AgoraEduSDK.config({
-        // 此处替换成你的 App ID
-        appId: "a6f19785b43d46d08ac412a2871b8ede",
-    })
-    AgoraEduSDK.launch(
-        document.querySelector("#root1"), {
-            // 此处替换成你的 RTM Token
-            rtmToken: "006a6f19785b43d46d08ac412a2871b8edeIABW2spTly3ywyJ5XTsX/9I3UPK6Nr/lMXRp1wO6h+aT90sKslUAAAAAEACKNG8KEKGtYQEA6AMQoa1h",
-            // 请确保此次的用户 ID 和你在生成临时 RTM Token 时使用的用户 ID 保持一致
-            userUuid: "001",
-            userName: "teacher",
-            roomUuid: "321",
-            roomName: "demo-class",
-            roleType: 1,
-            roomType: 0,
-            pretest: true,
-            language: "en",
-            startTime: new Date().getTime(),
-            duration: 60 * 30,
-            courseWareList: [],
-            listener: (evt) => {
-                console.log("evt", evt)
+        name: "OnlineClass",
+        data() {
+            return {
+                token : 'Token ' + this.$store.state.user_token,
+                rtmtoken:'',
+                userUuid1:'',
+                roomUuid:''
+
             }
+        },
+        methods:{
+            setCookie(c_name,value,expiredays){
+                var exdate=new Date();
+                exdate.setDate(exdate.getDate()+expiredays);
+                document.cookie=c_name+ "=" +escape(value)+
+                ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+            },
+            
+            classroominfo()
+            {
+                this.setCookie('userUuid1', this.userUuid1)
+                this.setCookie('rtmtoken', this.rtmtoken)
+                this.setCookie('roomUuid', '321')
+
+                // window.localStorage.setItem("userUuid1", this.userUuid1)
+                // window.localStorage.setItem("rtmtoken", this.rtmtoken)
+                // window.localStorage.setItem("roomUuid", "123")
+
+                console.log('success!!!!')
+            },
+
+        },
+        created() {
+                console.log(this.token)
+                networkrequest({
+                    url: apiName.rtmToken_api,
+                    method: 'GET',
+                    headers:{
+                        'Authorization':this.token
+                    }
+                }).then(res => {
+                    console.log(res.data)
+                    this.rtmtoken = res.data.rtmtoken
+                    this.userUuid1 = res.data.userUuid1
+                    this.roleType = res.data.roleType
+                }).catch(error =>{
+                    console.log(error.response)
+                })
+
         }
-    )
+
+
+    }
+
+
+
 </script>
+
 
 
 <style scoped>
@@ -39,5 +78,4 @@
         width: 100%;
         height: 100%;
     }
-
 </style>

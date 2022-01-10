@@ -12,7 +12,8 @@ export default new Vuex.Store({
     is_login : false,
     loginvisable:false,
     regvisable:false,
-    usercourse_name:''
+    usercourse_name:'',
+
   },
   mutations: {
     storeUsertoken(state, token) {

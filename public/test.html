@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgoraFlexibleClassroomDemo</title>
+    <!-- 此处集成 Agora Classroom SDK -->
+    <script src="https://download.agora.io/edu-apaas/release/edu_sdk@2.0.1.bundle.js"></script>
+</head>
+<style>
+
+    #root1 {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<body>
+
+<div id="root1"></div>
+
+<script type="text/javascript">
+    // function getCookie(userName){
+    //     if (document.cookie.length>0){
+    //         c_start=document.cookie.indexOf(userName+ "=");
+    //         if (c_start!=-1){
+    //             c_start=c_start + userName.length+1;
+    //             c_end=document.cookie.indexOf(";",c_start);
+    //             if (c_end==-1){
+    //                 c_end=document.cookie.length;
+    //             }
+    //             return unescape(document.cookie.substring(c_start,c_end));
+    //         }
+    //     }
+    //     return "";
+    // }
+
+
+    var userUuid1 = getCookie('userUuid1');
+    var rtmToken1 = getCookie('rtmToken');
+    var roomUuid1 = getCookie('roomUuid')
+
+    // var userUuid1 =window.localStorage.getItem("userUuid1")
+    // var rtmToken1 =window.localStorage.getItem("rtmtoken")
+    // var roomUuid1 =window.localStorage.getItem("roomUuid")
+    // var roleType1 =window.localStorage.getItem("roleType")
+
+    AgoraEduSDK.config({
+        // 此处替换成你的 App ID
+        appId: "a6f19785b43d46d08ac412a2871b8ede",
+    })
+    AgoraEduSDK.launch(
+
+        document.querySelector("#root1"), {
+            // 此处替换成你的 RTM Token
+            // rtmToken: rtmToken1,
+            rtmToken:"006a6f19785b43d46d08ac412a2871b8edeIABSNGMeX8/PKhQ9Nsq6vFMMTYuoX6TdLO3DTBhxbC62pq4rsYQAAAAAEADGpRTqcAHcYQEA6ANwAdxh",
+            // 请确保此次的用户 ID 和你在生成临时 RTM Token 时使用的用户 ID 保持一致
+            userUuid: "1",
+            userName: "kc",
+            roomUuid: "321",
+            roomName: "demo-class2",
+            roleType: 1,
+            roomType: 2,
+            listener:"ready",
+            pretest: true,
+            language: "en",
+            startTime: new Date().getTime(),
+            duration: 60 * 30,
+            courseWareList: [],
+            listener: (evt) => {
+                console.log("evt", evt)
+            }
+        }
+    )
+
+</script>
+</body>
+</html>

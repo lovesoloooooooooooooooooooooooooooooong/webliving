@@ -25,22 +25,24 @@
     import InfoCard from "./InfoCard";
     import TableCard from "./TableCard";
     import Usermodel from "../../model/usermodel";
-    import usermodel from "../../model/usermodel";
+
 
     export default {
         name: "UserProfile",
         components: {TableCard, InfoCard},
         data() {
             return {
-                token : 'Token ' + this.$store.state.user_token
+                token : 'Token ' + this.$store.state.user_token,
+                roleType:''
+
             }
         },
         created: function() {
-            this.getUserProfile()
+            this.getUserDetail()
             // this.getUsercourse()
+            // this.getUserProfile()
         },
         methods: {
-
 
             getUserProfile : function() {
                 networkrequest({
@@ -62,30 +64,36 @@
                     console.log(error.response)
                 })
             },
-            getUserDetail: function(userid) {
+
+
+            getUserDetail: function() {
+                console.log(this.token)
                 networkrequest({
                     url: apiName.userdetail_api,
                     method: 'GET',
-                    params: {
-                        pk: userid
-                    },
+                    // params: {
+                    //     pk: userid
+                    // }, 效果是在url中加上参数 然后在django中的路由配置地方可以接受到参数
                     headers:{
                         'Authorization':this.token
                     }
                 }).then(res => {
-                    let usermodel = this.$store.state.userinfo.user;
-                    usermodel.avatar = res.data.avatar;
-                    usermodel.account_balance = res.data.account_balance;
-                    usermodel.birthdate = res.data.birthdate;
-                    usermodel.gender = res.data.gender;
-                    usermodel.gift_balance = res.data.gift_balance;
-                    usermodel.nickname = res.data.nickname;
-                    usermodel.tel_num = res.data.tel_num;
-                    usermodel.total_number_of_classes = res.data.total_number_of_classes;
-                    usermodel.useremail = res.data.useremail;
-                    usermodel.username = res.data.username;
-                    this.$store.dispatch("storeUserInfo", usermodel)
+                    // let usermodel = this.$store.state.userinfo.user;
+                    // usermodel.avatar = res.data.avatar;
+                    // usermodel.account_balance = res.data.account_balance;
+                    // usermodel.birthdate = res.data.birthdate;
+                    // usermodel.gender = res.data.gender;
+                    // usermodel.gift_balance = res.data.gift_balance;
+                    // usermodel.nickname = res.data.nickname;
+                    // usermodel.tel_num = res.data.tel_num;
+                    // usermodel.total_number_of_classes = res.data.total_number_of_classes;
+                    // usermodel.useremail = res.data.useremail;
+                    // usermodel.username = res.data.username;
+                    // this.$store.dispatch("storeUserInfo", usermodel)
                     console.log(res);
+                    this.roleType = res.data.roletype
+                    console.log(this.roleType);
+                    window.localStorage.setItem("roleType", this.roleType)
                 }).catch(error =>{
                     console.log(error.response)
                 })

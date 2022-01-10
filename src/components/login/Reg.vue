@@ -85,6 +85,7 @@
                     this.$store.commit('storeUsertoken', usertoken)
                     this.$store.commit('setloginvisable', false)
                     // this.$store.state.loginvisable = false
+                    window.localStorage.setItem("username", this.username)
                     this.$router.push('userprofile')
                 }).catch(error =>{
                     console.log(error.response)

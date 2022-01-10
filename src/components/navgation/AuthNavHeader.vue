@@ -27,7 +27,8 @@
         name: "AuthNavHeader",
         computed: {
             username: function () {
-                return this.$store.state.userinfo.user.username;
+                return window.localStorage.getItem("username")
+
             }
         }
     }

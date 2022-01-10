@@ -21,13 +21,9 @@
 <script>
     import {networkrequest} from "../../network/networkrequest"
     import apiName from "../../network/apiurl"
-
-
     import axios from 'axios';
-
-
-
     // import store from "../../store"
+
     export default {
         name: "Login",
         props:{
@@ -83,6 +79,7 @@
                     this.$store.commit('storeUsertoken', usertoken)
                     this.$store.commit('setloginvisable', false)
                     // this.$store.state.loginvisable = false
+                    window.localStorage.setItem("username", this.username)
                     this.$router.push('userprofile')
                 }).catch(error =>{
                     console.log(error.response)

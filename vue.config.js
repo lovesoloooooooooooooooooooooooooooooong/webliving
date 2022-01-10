@@ -16,6 +16,14 @@ module.exports = {
             // 提取出来的通用 chunk 和 vendor chunk。
             chunks: ['chunk-vendors', 'chunk-common', 'index']
         },
+        test:{
+            entry: "public/test.js",
+            template: 'public/test.html',
+            filename: 'test.html',
+            title: 'test'
+        },
+
+
         // 当使用只有入口的字符串格式时，
         // 模板会被推导为 `public/subpage.html`
         // 并且如果找不到的话，就回退到 `public/index.html`。
@@ -32,5 +40,13 @@ module.exports = {
     //     open: true // 配置自动启动浏览器
     //
     // },
+    // chainWebpack: config => {
+    //     config.module
+    //         .rule("html")
+    //         .test(/\.html$/)
+    //         .use("html-loader")
+    //         .loader("html-loader");
+    // }
+
 
 }
